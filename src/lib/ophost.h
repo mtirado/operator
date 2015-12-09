@@ -5,9 +5,7 @@
 #ifndef OPHOST_H__
 #define OPHOST_H__
 
-#include <sys/time.h>
-
-
+struct timeval;
 /* represents a new connection that is being processed */
 struct caller_handshake
 {

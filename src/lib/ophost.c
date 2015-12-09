@@ -14,6 +14,7 @@
 #include <sys/un.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
