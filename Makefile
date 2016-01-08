@@ -21,10 +21,10 @@ DEFLANG	:= -ansi
 #	PROGRAM SOURCE FILES XXX ophost needed??
 #########################################
 OPERATOR_SRCS :=					\
-		./src/operator.c			\
-		./src/lib/ophost.c				\
-		./src/eslib/eslib_file.c		\
-		./src/eslib/eslib_sock.c
+		./operator.c			\
+		./lib/ophost.c				\
+		./eslib/eslib_file.c		\
+		./eslib/eslib_sock.c
 OPERATOR_OBJS := $(OPERATOR_SRCS:.c=.o)
 
 
@@ -32,11 +32,11 @@ OPERATOR_OBJS := $(OPERATOR_SRCS:.c=.o)
 #	TESTS
 ########################################
 TEST_OPERATOR_SRCS :=					\
-		./src/tests/operator_test.c		\
-		./src/eslib/eslib_sock.c		\
-		./src/eslib/eslib_file.c		\
-		./src/eslib/eslib_proc.c		\
-		./src/lib/ophost.c
+		./tests/operator_test.c		\
+		./eslib/eslib_sock.c		\
+		./eslib/eslib_file.c		\
+		./eslib/eslib_proc.c		\
+		./lib/ophost.c
 TEST_OPERATOR_OBJS := $(TEST_OPERATOR_SRCS:.c=.o)
 
 
