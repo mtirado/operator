@@ -1,0 +1,211 @@
+PID: 2356
+ipc type: shmpair
+running test size: 1024
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 2048
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 4096
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 8192
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 16384
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 32768
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 65536
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 131072
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 262144
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 524288
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 1048576
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 2097152
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 4194304
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 8388608
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 16777216
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 33554432
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 67108864
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 134217728
+[peer] send iterations: 1
+[peer] recv iterations: 1
+running test size: 268435456
+[peer] send iterations: 1
+[peer] recv iterations: 1
+
+---------------------------
+pass 1KB
+-----------------------------
+send:  0.001264
+recv:  0.012210
+transit: 0.013474
+total(+protocol overhead): 113.375694
+
+---------------------------
+pass 2KB
+-----------------------------
+send:  0.001818
+recv:  0.024517
+transit: 0.026335
+total(+protocol overhead): 133.372237
+
+---------------------------
+pass 4KB
+-----------------------------
+send:  0.002756
+recv:  0.049122
+transit: 0.051878
+total(+protocol overhead): 133.425308
+
+---------------------------
+pass 8KB
+-----------------------------
+send:  0.005854
+recv:  0.098239
+transit: 0.104093
+total(+protocol overhead): 133.475895
+
+---------------------------
+pass 16KB
+-----------------------------
+send:  0.008989
+recv:  0.196444
+transit: 0.205433
+total(+protocol overhead): 133.566270
+
+---------------------------
+pass 32KB
+-----------------------------
+send:  0.017749
+recv:  0.394617
+transit: 0.412366
+total(+protocol overhead): 133.405965
+
+---------------------------
+pass 64KB
+-----------------------------
+send:  0.036068
+recv:  0.797075
+transit: 0.833143
+total(+protocol overhead): 134.411798
+
+---------------------------
+pass 128KB
+-----------------------------
+send:  0.070793
+recv:  1.601708
+transit: 1.672501
+total(+protocol overhead): 134.422583
+
+---------------------------
+pass 256KB
+-----------------------------
+send:  0.102938
+recv:  3.220112
+transit: 3.323050
+total(+protocol overhead): 135.395049
+
+---------------------------
+pass 512KB
+-----------------------------
+send:  0.201248
+recv:  6.463900
+transit: 6.665148
+total(+protocol overhead): 137.580950
+
+---------------------------
+pass 1024KB
+-----------------------------
+send:  0.515967
+recv:  12.970304
+transit: 13.486271
+total(+protocol overhead): 141.900315
+
+---------------------------
+pass 2048KB
+-----------------------------
+send:  1.311255
+recv:  26.287632
+transit: 27.598887
+total(+protocol overhead): 150.533888
+
+---------------------------
+pass 4096KB
+-----------------------------
+send:  2.972383
+recv:  53.157907
+transit: 56.130290
+total(+protocol overhead): 166.408564
+
+---------------------------
+pass 8192KB
+-----------------------------
+send:  6.161556
+recv:  106.720596
+transit: 112.882152
+total(+protocol overhead): 198.934220
+
+---------------------------
+pass 16384KB
+-----------------------------
+send:  10.881500
+recv:  213.913864
+transit: 224.795364
+total(+protocol overhead): 349.077346
+
+---------------------------
+pass 32768KB
+-----------------------------
+send:  20.572735
+recv:  428.584802
+transit: 449.157537
+total(+protocol overhead): 685.644065
+
+---------------------------
+pass 65536KB
+-----------------------------
+send:  40.007385
+recv:  856.587854
+transit: 896.595239
+total(+protocol overhead): 1331.923854
+
+---------------------------
+pass 131072KB
+-----------------------------
+send:  82.973440
+recv:  1710.744681
+transit: 1793.718121
+total(+protocol overhead): 2619.236614
+
+---------------------------
+pass 262144KB
+-----------------------------
+send:  165.879026
+recv:  3419.338045
+transit: 3585.217071
+total(+protocol overhead): 5267.966410

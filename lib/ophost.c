@@ -147,6 +147,7 @@ int ophost_accept(struct ophost *self)
 		else if (retval == -1)
 			return -1;
 		else if (msg == 'R') { /* connection request */
+			printf("[%u] host got conn request...\n", getpid());
 			if (ophost_create_callerhandshake(self)) {
 				printf("error creating caller handshake\n");
 				return -1;

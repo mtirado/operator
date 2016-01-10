@@ -20,9 +20,9 @@ DEFLANG	:= -ansi
 #########################################
 #	PROGRAM SOURCE FILES XXX ophost needed??
 #########################################
-OPERATOR_SRCS :=					\
+OPERATOR_SRCS :=				\
 		./operator.c			\
-		./lib/ophost.c				\
+		./lib/ophost.c			\
 		./eslib/eslib_file.c		\
 		./eslib/eslib_sock.c
 OPERATOR_OBJS := $(OPERATOR_SRCS:.c=.o)
@@ -31,7 +31,7 @@ OPERATOR_OBJS := $(OPERATOR_SRCS:.c=.o)
 ########################################
 #	TESTS
 ########################################
-TEST_OPERATOR_SRCS :=					\
+TEST_OPERATOR_SRCS :=				\
 		./tests/operator_test.c		\
 		./eslib/eslib_sock.c		\
 		./eslib/eslib_file.c		\
@@ -39,18 +39,28 @@ TEST_OPERATOR_SRCS :=					\
 		./lib/ophost.c
 TEST_OPERATOR_OBJS := $(TEST_OPERATOR_SRCS:.c=.o)
 
+TEST_IPCBENCH_SRCS :=				\
+		./tests/ipcbench.c		\
+		./lib/shmpair.c			\
+		./eslib/eslib_sock.c		\
+		./eslib/eslib_file.c		\
+		./lib/ophost.c
+TEST_IPCBENCH_OBJS := $(TEST_IPCBENCH_SRCS:.c=.o)
+
 
 ########################################
 #	PROGRAM FILENAMES
 ########################################
 OPERATOR 	:= operator
 TEST_OPERATOR	:= operator_test
+TEST_IPCBENCH	:= operator_bench
 
 %.o: 		%.c
 			$(CC) -c $(DEFLANG) $(CFLAGS) $(DBG) -o $@ $<
 
 all:	$(OPERATOR)		\
-	$(TEST_OPERATOR)
+	$(TEST_OPERATOR)	\
+	$(TEST_IPCBENCH)
 
 
 
@@ -71,6 +81,14 @@ $(TEST_OPERATOR):	$(TEST_OPERATOR_OBJS)
 			@echo "|        operator_test  OK   |"
 			@echo "x----------------------------x"
 
+$(TEST_IPCBENCH):	$(TEST_IPCBENCH_OBJS)
+		  	$(CC) $(LDFLAGS) $(TEST_IPCBENCH_OBJS) -o $@
+			@echo ""
+			@echo "x----------------------------x"
+			@echo "|        operator_bench OK   |"
+			@echo "x----------------------------x"
+
+
 
 ########################################
 #	CLEAN UP THE MESS
@@ -78,9 +96,11 @@ $(TEST_OPERATOR):	$(TEST_OPERATOR_OBJS)
 clean:
 	@$(foreach obj, $(OPERATOR_OBJS), rm -fv $(obj);)
 	@$(foreach obj, $(TEST_OPERATOR_OBJS), rm -fv $(obj);)
+	@$(foreach obj, $(TEST_IPCBENCH_OBJS), rm -fv $(obj);)
 
 	@-rm -fv ./$(OPERATOR)
 	@-rm -fv ./$(TEST_OPERATOR)
+	@-rm -fv ./$(TEST_IPCBENCH)
 	@echo cleaned.
 
 
