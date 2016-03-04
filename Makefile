@@ -24,6 +24,8 @@ OPERATOR_SRCS :=				\
 		./operator.c			\
 		./lib/ophost.c			\
 		./eslib/eslib_file.c		\
+		./eslib/eslib_log.c		\
+		./eslib/eslib_proc.c		\
 		./eslib/eslib_sock.c
 OPERATOR_OBJS := $(OPERATOR_SRCS:.c=.o)
 

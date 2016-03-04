@@ -1,10 +1,6 @@
 /* (c) 2015 Michael R. Tirado -- GPLv3, GNU General Public License, version 3.
  * contact: mtirado418@gmail.com
  *
- * TODO:
- * logging calls (delayed non-spammy logging function)
- * put these in eslib and search / replace logcrit logerror etc..
- *
  * TODO !!!  config file:
  * for setting user-related parameters, max hosts, owning hostnames, etc
  * could also use the file for expressing which users are allowed to connect
@@ -97,13 +93,12 @@ static void operator_update_hosts();
 static int init();
 
 
+char g_errbuf[ESLIB_LOG_MAXMSG];
 
 static void operator_signal_handler(int signum)
 {
 	printf("received signal(%d): %s\n", signum, strsignal(signum));
 	if (signum == SIGTERM) {
-		/* TODO  put logging in eslib
-		 * loginfo("operator shut down with sigterm/");*/
 		/* TODO notify all hosts of incoming termination of service.*/
 		usleep(1000000);
 		kill(getpid(), SIGKILL);
@@ -180,11 +175,10 @@ static int operator_accept_connection(int sock, int nonblock)
 	memset(&addr, 0, sizeof(addr));
 	newsock = accept(sock, (struct sockaddr *)&addr, &addrlen);
 	if (newsock == -1) {
-		if (errno != EAGAIN && errno != EINTR)
+		if (errno != EAGAIN && errno != EINTR) {
 			printf("operator - accept_connection error: %s",
 					strerror(errno));
-			/*logcrit("operator - accept_connection_error: %s",
-					strerror(errno));*/
+		}
 		return -1;
 	}
 
@@ -351,9 +345,9 @@ static int operator_update_registration()
 
 		/* validate hostname */
 		if (retval <= 1 || msg[0] == '\0' || msg[retval-1] != '\0') {
-			/* TODO should definitely log here,
-			 * on a timer of course, don't spam */
-			printf("rude caller, axing line.\n");
+			static time_t t = 0;
+			eslib_logerror_t("operator",
+					 "erroneous hostname", &t, 10);
 			goto drop_pending;
 		}
 
@@ -455,7 +449,7 @@ static int req_handshake_process(struct handshake *hshk)
 	 * host and caller can do their own mystical handshake if they
 	 * are so inclined. operator only cares about introducing them.
 	 */
-	
+
 
 	/*
 	 * get hostname
@@ -468,7 +462,8 @@ static int req_handshake_process(struct handshake *hshk)
 	}
 	/* validate string */
 	if (msg[0] == '\0' || msg[retval-1] != '\0') {
-		printf("handshake: invalid message(%s): %d\n", msg, retval);
+		static time_t t = 0;
+		eslib_logerror_t("operator","invalid handshake message",&t,10);
 		goto eject;
 	}
 	host = host_lookup(msg);
@@ -602,8 +597,8 @@ static int operator_update_requests()
 	struct timeval tmr;
 	unsigned int i, h;
 	int sock;
-	int retpid;
 	int status;
+	pid_t retpid;
 	pid_t wpid = -1;
 
 	gettimeofday(&tmr, NULL);
@@ -628,8 +623,15 @@ static int operator_update_requests()
 
 		/* collect successful handshakes */
 		retpid = waitpid(wpid, &status, WNOHANG);
-		if (retpid == 0 || retpid == -1) /* XXX log on -1? */
-			continue; /* still waiting... */
+		if (retpid == 0) {
+			continue;
+		}
+		else if (retpid < 0) {
+			static time_t t = 0;
+			eslib_logerror_t("operator", "request pid error",
+					&t, 2);
+			continue;
+		}
 clear_slot:
 		/* free up the handshake slot in global array */
 		for (h = 0; h < MAXREQ_HSHK; ++h) {
@@ -640,9 +642,10 @@ clear_slot:
 			}
 		} /* was not found, should never happen */
 		if (h >= MAXREQ_HSHK) {
-			printf("handshake pid(%d) was not found\n", retpid);
-			memset(g_operator.requests, 0,
-					sizeof(g_operator.requests));
+			snprintf(g_errbuf, sizeof(g_errbuf),
+					"handshake pid %d not found", retpid);
+			eslib_logcritical("operator", g_errbuf);
+			memset(g_operator.requests, 0,	sizeof(g_operator.requests));
 		}
 	}
 
@@ -665,8 +668,7 @@ static struct _ophost *remove_host(struct _ophost *prev,
 				   struct _ophost *current)
 {
 	if (!current) {
-		/*logcrit("remove_host current == NULL\n");*/
-		printf("remove_host current == NULL\n");
+		eslib_logcritical("operator", "remove_host current==NULL");
 		return NULL;
 	}
 	if (prev)
